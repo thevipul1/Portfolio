@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta name="referrer" content="no-referrer"/>
+<meta name="robots" content="index, follow"/>
+<title>Vipul Pal — Linux & DevOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Exo+2:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+/* Skip link & focus styles */
+.skip-link{position:absolute;top:-100px;left:1rem;background:var(--accent);color:#030608;padding:.5rem 1rem;border-radius:2px;font-family:var(--mono);font-size:.8rem;z-index:9999;transition:top .2s}
+.skip-link:focus{top:1rem}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+:root {
+  --bg:      #040810;
+  --s1:      #060c1a;
+  --s2:      #080f20;
+  --s3:      #050d1c;
+  --s4:      #07101f;
+  --s5:      #060b18;
+  --s6:      #04091a;
+  --border:  #152040;
+  --accent:  #38bdf8;
+  --accent2: #818cf8;
+  --accent3: #f472b6;
+  --text:    #e2eaf8;
+  --muted:   #6b7fa8;
+  --mono:    'Share Tech Mono', monospace;
+  --display: 'Orbitron', sans-serif;
+  --body:    'Exo 2', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(4,8,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:.88rem;color:var(--accent);letter-spacing:.05em}
+.nav-logo span{color:var(--muted)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-decoration:none;letter-spacing:.09em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;outline:none}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--muted)}
+@media(max-width:768px){.menu-toggle{display:flex}.nav-links{display:none}}
+
+/* SECTION BASE */
+section{position:relative;overflow:hidden;padding:7rem 2.5rem}
+.sec-bg{position:absolute;inset:0;z-index:0}
+.section-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+#projects .section-inner{max-width:1300px}
+.section-label{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.75rem}
+.section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);opacity:.35}
+.section-title{font-family:var(--display);font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:.02em;margin-bottom:3rem}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* DIVIDERS */
+.section-divider{height:50px;display:block}
+.d1{background:linear-gradient(180deg,#060d1f 0%,var(--s1) 100%)}
+.d2{background:linear-gradient(180deg,var(--s1) 0%,var(--s2) 100%)}
+.d3{background:linear-gradient(180deg,var(--s2) 0%,var(--s3) 100%)}
+.d4{background:linear-gradient(180deg,var(--s3) 0%,var(--s4) 100%)}
+.d5{background:linear-gradient(180deg,var(--s4) 0%,var(--s5) 100%)}
+.d6{background:linear-gradient(180deg,var(--s5) 0%,var(--s6) 100%)}
+.d7{background:linear-gradient(180deg,var(--s6) 0%,var(--bg) 100%)}
+
+/* ═══ EDUCATION ═══ */
+#education{background:var(--s6)}
+#education .sec-bg{
+  background-color:var(--s6);
+  background-image:
+    linear-gradient(rgba(129,140,248,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(129,140,248,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+#education::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 15% 50%,rgba(129,140,248,.09) 0%,transparent 65%);z-index:1}
+
+.edu-card{
+  background:rgba(5,10,22,.88);border:1px solid var(--border);
+  padding:2.5rem;border-radius:2px;
+  display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start;
+  transition:border-color .25s,background .25s;position:relative;overflow:hidden;
+}
+.edu-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent2),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.edu-card:hover{border-color:rgba(129,140,248,.4);background:rgba(7,14,30,.94)}
+.edu-card:hover::after{transform:scaleX(1)}
+.edu-year{font-family:var(--mono);font-size:2.2rem;font-weight:500;color:var(--accent2);line-height:1;padding-top:.3rem;min-width:80px}
+.edu-degree{font-family:var(--display);font-size:1.3rem;font-weight:700;margin-bottom:.4rem}
+.edu-institution{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-bottom:.8rem;letter-spacing:.03em}
+.edu-meta{display:flex;gap:.8rem;flex-wrap:wrap}
+.edu-badge{font-family:var(--mono);font-size:.7rem;padding:.25rem .65rem;background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.22);color:var(--accent2);border-radius:2px;letter-spacing:.04em}
+
+/* ═══ HERO ═══ */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:8rem;padding-bottom:4rem;background:linear-gradient(170deg,#060d1f 0%,#040810 55%,#050c1a 100%)}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 110% 75% at 75% 5%,rgba(56,189,248,.13) 0%,transparent 58%),radial-gradient(ellipse 75% 55% at 8% 85%,rgba(129,140,248,.1) 0%,transparent 55%);z-index:1}
+.hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 15%,transparent 100%)}
+#starCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.73rem;color:var(--accent);border:1px solid rgba(56,189,248,.3);padding:.32rem .8rem;border-radius:2px;margin-bottom:1.8rem;animation:fadeUp .6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 1.5s ease infinite}
+.hero-name{font-family:var(--display);font-size:clamp(2.8rem,7.5vw,6.5rem);font-weight:900;line-height:.92;letter-spacing:-.01em;animation:fadeUp .6s .1s ease both}
+.hero-name .accent{color:transparent;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text}
+.hero-title{font-family:var(--mono);font-size:clamp(.82rem,2vw,1rem);color:var(--muted);margin:1.5rem 0 2rem;letter-spacing:.06em;animation:fadeUp .6s .2s ease both}
+.hero-title .hl{color:var(--accent2)}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:3px;vertical-align:text-bottom;animation:blink 1s step-end infinite}
+.hero-summary{max-width:560px;font-size:.98rem;color:#bfcfe8;line-height:1.85;animation:fadeUp .6s .3s ease both}
+.hero-cta{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;animation:fadeUp .6s .4s ease both}
+.btn{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:.72rem 1.75rem;border-radius:2px;transition:all .25s;cursor:pointer;display:inline-block}
+.btn-primary{background:var(--accent);color:#030608;font-weight:700;border:1px solid var(--accent)}
+.btn-primary:hover{background:transparent;color:var(--accent)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border);animation:fadeUp .6s .5s ease both;flex-wrap:wrap}
+.stat-num{font-family:var(--display);font-size:1.9rem;font-weight:800;color:var(--accent)}
+.stat-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.1rem}
+
+/* ── HERO ANIMATIONS ── */
+#particleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+.scanline{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+.scanline::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(56,189,248,.18),rgba(56,189,248,.45),rgba(56,189,248,.18),transparent);box-shadow:0 0 18px 4px rgba(56,189,248,.15);animation:scanSweep 5s linear infinite;top:-4px;}
+@keyframes scanSweep{0%{top:-4px}100%{top:100%}}
+
+.hero-bracket{position:absolute;z-index:2;pointer-events:none}
+.hero-bracket.tl{top:6rem;left:1.5rem;border-top:2px solid rgba(56,189,248,.35);border-left:2px solid rgba(56,189,248,.35);width:36px;height:36px}
+.hero-bracket.tr{top:6rem;right:1.5rem;border-top:2px solid rgba(56,189,248,.35);border-right:2px solid rgba(56,189,248,.35);width:36px;height:36px}
+.hero-bracket.bl{bottom:2rem;left:1.5rem;border-bottom:2px solid rgba(56,189,248,.35);border-left:2px solid rgba(56,189,248,.35);width:36px;height:36px}
+.hero-bracket.br{bottom:2rem;right:1.5rem;border-bottom:2px solid rgba(56,189,248,.35);border-right:2px solid rgba(56,189,248,.35);width:36px;height:36px}
+
+@keyframes glitch1{0%,90%,100%{clip-path:inset(0 0 100% 0);transform:translate(0)}91%{clip-path:inset(10% 0 60% 0);transform:translate(-4px,1px)}92%{clip-path:inset(40% 0 30% 0);transform:translate(4px,-1px)}93%{clip-path:inset(65% 0 10% 0);transform:translate(-3px,2px)}94%{clip-path:inset(0 0 100% 0);transform:translate(0)}}
+@keyframes glitch2{0%,90%,100%{clip-path:inset(0 0 100% 0);transform:translate(0)}91%{clip-path:inset(55% 0 20% 0);transform:translate(5px,-2px);color:rgba(244,114,182,.7)}92%{clip-path:inset(20% 0 55% 0);transform:translate(-5px,1px);color:rgba(56,189,248,.7)}93%{clip-path:inset(0 0 100% 0);transform:translate(0)}}
+.hero-name{position:relative}
+.hero-name::before,.hero-name::after{content:attr(data-text);position:absolute;inset:0;font-family:var(--display);font-size:inherit;font-weight:900;line-height:.92;letter-spacing:-.01em;pointer-events:none;}
+.hero-name::before{animation:glitch1 7s infinite;color:var(--accent)}
+.hero-name::after{animation:glitch2 7s .15s infinite;color:var(--accent3)}
+
+.cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:3px;vertical-align:text-bottom;animation:blink 1s step-end infinite;box-shadow:0 0 8px var(--accent)}
+
+.data-chip{position:absolute;font-family:var(--mono);font-size:.62rem;color:rgba(56,189,248,.5);letter-spacing:.08em;pointer-events:none;z-index:2;white-space:nowrap;animation:floatChip linear infinite;}
+@keyframes floatChip{0%{opacity:0;transform:translateY(20px)}10%{opacity:1}90%{opacity:.4}100%{opacity:0;transform:translateY(-60px)}}
+
+/* ═══ SKILLS ═══ */
+#skills{background:var(--s1)}
+#skills .sec-bg{background-color:var(--s1);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16V50L28 66L0 50V16Z' fill='none' stroke='rgba(56,189,248,0.055)' stroke-width='1'/%3E%3Cpath d='M28 66L56 50V84L28 100L0 84V50Z' fill='none' stroke='rgba(56,189,248,0.055)' stroke-width='1'/%3E%3C/svg%3E");background-size:56px 100px;}
+#skills::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,8,16,.65) 0%,transparent 25%,transparent 75%,rgba(4,8,16,.65) 100%);z-index:1}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--border)}
+.skill-card{background:rgba(5,10,24,.92);padding:2.2rem 2rem;position:relative;overflow:hidden;transition:background .25s}
+.skill-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(180deg,var(--accent),var(--accent2));transition:height .35s ease}
+.skill-card:hover{background:rgba(8,16,36,.97)}
+.skill-card:hover::before{height:100%}
+.skill-icon{font-size:1.6rem;margin-bottom:.9rem}
+.skill-category{font-family:var(--display);font-size:.98rem;font-weight:700;margin-bottom:.9rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{font-family:var(--mono);font-size:.68rem;padding:.22rem .58rem;background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.14);color:var(--muted);border-radius:2px;letter-spacing:.05em;transition:all .2s}
+.skill-card:hover .tag{color:var(--accent);border-color:rgba(56,189,248,.38)}
+
+/* ═══ EXPERIENCE ═══ */
+#experience{background:var(--s2)}
+#experience .sec-bg{background-color:var(--s2);background-image:repeating-linear-gradient(-52deg,transparent,transparent 38px,rgba(56,189,248,.028) 38px,rgba(56,189,248,.028) 39px);}
+#experience::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 95% 50%,rgba(56,189,248,.08) 0%,transparent 65%);z-index:1}
+
+.exp-timeline{position:relative;padding-left:2.8rem}
+.exp-timeline::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent2));opacity:.28}
+.exp-block{position:relative;padding:2.2rem 2rem;margin-bottom:1px;background:rgba(6,12,26,.82);border:1px solid var(--border);border-left:none;transition:background .25s}
+.exp-block:hover{background:rgba(8,18,38,.94)}
+.exp-block::before{content:'';position:absolute;left:-2.8rem;top:2.6rem;width:10px;height:10px;background:var(--accent);border-radius:50%;border:2px solid var(--s2);box-shadow:0 0 10px rgba(56,189,248,.6)}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem}
+.exp-role{font-family:var(--display);font-size:1.2rem;font-weight:700}
+.exp-period{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.08em;white-space:nowrap}
+.exp-company{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-bottom:1rem}
+.exp-points{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.exp-points li{font-size:.91rem;color:#bfcfe8;padding-left:1.3rem;position:relative}
+.exp-points li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:.18rem}
+
+/* ═══ PROJECTS ═══ */
+#projects{background:var(--s3)}
+#projects .sec-bg{background-color:var(--s3);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cg fill='none' stroke='rgba(56,189,248,0.065)' stroke-width='1'%3E%3Crect x='10' y='10' width='20' height='20' rx='2'/%3E%3Crect x='70' y='70' width='20' height='20' rx='2'/%3E%3Crect x='70' y='10' width='20' height='20' rx='2'/%3E%3Crect x='10' y='70' width='20' height='20' rx='2'/%3E%3Cline x1='30' y1='20' x2='70' y2='20'/%3E%3Cline x1='30' y1='80' x2='70' y2='80'/%3E%3Cline x1='20' y1='30' x2='20' y2='70'/%3E%3Cline x1='80' y1='30' x2='80' y2='70'/%3E%3Ccircle cx='50' cy='50' r='5'/%3E%3Cline x1='20' y1='50' x2='45' y2='50'/%3E%3Cline x1='55' y1='50' x2='80' y2='50'/%3E%3Cline x1='50' y1='20' x2='50' y2='45'/%3E%3Cline x1='50' y1='55' x2='50' y2='80'/%3E%3C/g%3E%3C/svg%3E");background-size:100px 100px;}
+#projects::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(129,140,248,.07) 0%,transparent 50%,rgba(56,189,248,.05) 100%);z-index:1}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:2rem}
+
+/* ── FLIP CARD SYSTEM ── */
+.card-flip-wrap{
+  perspective:1200px;
+  min-height:420px;
+}
+.project-card{
+  position:relative;width:100%;height:100%;min-height:420px;
+  transform-style:preserve-3d;
+  transition:transform .7s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;
+}
+.card-flip-wrap:hover .project-card,
+.project-card.flipped{
+  transform:rotateY(180deg);
+}
+
+/* Front & back shared */
+.card-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  overflow:hidden;padding:2.5rem;
+  display:flex;flex-direction:column;
+}
+.card-front{ transform:rotateY(0deg); }
+.card-back { transform:rotateY(180deg); }
+
+/* Flip hint on front */
+.flip-hint{
+  position:absolute;bottom:.9rem;right:1rem;
+  font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.2);
+  letter-spacing:.08em;display:flex;align-items:center;gap:.3rem;
+  pointer-events:none;z-index:20;
+}
+.flip-hint::before{content:'↻';font-size:.75rem}
+
+/* Shine sweep overlay on front */
+.card-front .shine{
+  position:absolute;inset:0;pointer-events:none;z-index:9;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.0) 0%,transparent 60%);
+  transition:background .2s;
+}
+
+/* ── BACK FACE BASE ── */
+.card-back{
+  display:flex;flex-direction:column;justify-content:space-between;
+  gap:1rem;
+}
+.back-label{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;
+  text-transform:uppercase;opacity:.5;margin-bottom:.3rem;
+}
+.back-title{
+  font-family:var(--display);font-size:1.1rem;font-weight:800;
+  line-height:1.2;margin-bottom:1rem;
+}
+.back-details{
+  flex:1;display:flex;flex-direction:column;gap:.55rem;
+}
+.back-detail-row{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-family:var(--mono);font-size:.72rem;line-height:1.6;
+}
+.back-detail-row .icon{font-size:.85rem;min-width:18px;margin-top:.05rem}
+.back-stack{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,.07)}
+.back-stack .stack-tag{font-family:var(--mono);font-size:.65rem;padding:.2rem .5rem;border-radius:2px;letter-spacing:.04em}
+
+/* ── BACK: card-threat ── */
+.card-threat .card-back{
+  background:#0e0606;border:1px solid #3d0f0f;border-top:2px solid #e03030;
+}
+.card-threat .back-title{color:#ff6b6b;text-shadow:0 0 16px rgba(220,40,40,.4)}
+.card-threat .back-label{color:#e03030}
+.card-threat .back-detail-row{color:#c49090}
+.card-threat .back-detail-row .icon{color:#e03030}
+.card-threat .back-stack .stack-tag{background:rgba(220,40,40,.1);border:1px solid rgba(220,40,40,.3);color:#ff8080}
+
+/* ── BACK: card-matrix ── */
+.card-matrix .card-back{
+  background:#080612;border:1px solid #2a1a4a;border-left:3px solid #a855f7;
+}
+.card-matrix .back-title{color:#d8b4fe;text-shadow:0 0 18px rgba(168,85,247,.45)}
+.card-matrix .back-label{color:#a855f7}
+.card-matrix .back-detail-row{color:#9b86c0}
+.card-matrix .back-detail-row .icon{color:#a855f7}
+.card-matrix .back-stack .stack-tag{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.28);color:#c084fc}
+
+/* ── BACK: card-monitor ── */
+.card-monitor .card-back{
+  background:#020d04;border:1px solid #0d3016;border-bottom:2px solid #22c55e;
+  font-family:var(--mono);
+}
+.card-monitor .back-title{color:#4ade80;text-shadow:0 0 14px rgba(34,197,94,.4);font-family:var(--mono);letter-spacing:.04em}
+.card-monitor .back-label{color:#16a34a}
+.card-monitor .back-detail-row{color:#6b9e7a}
+.card-monitor .back-detail-row .icon{color:#22c55e}
+.card-monitor .back-stack .stack-tag{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#4ade80}
+
+/* ── BACK: card-firewall ── */
+.card-firewall .card-back{
+  background:#0c0700;border:1px solid #3d1f00;border-right:3px solid #f97316;
+}
+.card-firewall .back-title{color:#fb923c;text-shadow:0 0 16px rgba(249,115,22,.4)}
+.card-firewall .back-label{color:#f97316}
+.card-firewall .back-detail-row{color:#b07a50}
+.card-firewall .back-detail-row .icon{color:#f97316}
+.card-firewall .back-stack .stack-tag{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.28);color:#fb923c}
+.project-num{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;margin-bottom:1rem;opacity:.7}
+.project-name{font-family:var(--display);font-size:1.2rem;font-weight:700;margin-bottom:.9rem;line-height:1.3}
+.project-desc{font-size:.87rem;line-height:1.85;margin-bottom:1.5rem;flex:1}
+.project-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto}
+
+/* ══════════════════════════════════════
+   CARD 01 — RED THREAT-INTEL TERMINAL
+   Crimson / dark-blood palette, scanline sweep, blinking alert badge
+══════════════════════════════════════ */
+.card-threat .card-front{
+  background:#0e0606;
+  border:1px solid #3d0f0f;
+  border-top:2px solid #e03030;
+  box-shadow:0 0 40px rgba(220,40,40,.12) inset, 0 4px 30px rgba(220,40,40,.08);
+}
+.card-threat .card-front::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(220,40,40,.018) 3px,rgba(220,40,40,.018) 4px);
+  pointer-events:none;z-index:0;
+}
+.card-threat .card-scanline{
+  position:absolute;left:0;right:0;height:60px;
+  background:linear-gradient(180deg,transparent,rgba(220,40,40,.07),transparent);
+  animation:threatScan 3.5s linear infinite;pointer-events:none;z-index:1;top:-60px;
+}
+@keyframes threatScan{0%{top:-60px}100%{top:100%}}
+.card-threat .project-num{color:#e03030}
+.card-threat .project-name{color:#ff6b6b;text-shadow:0 0 20px rgba(220,40,40,.4)}
+.card-threat .project-desc{color:#c49090}
+.card-threat .threat-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.6rem;color:#ff4444;
+  border:1px solid #3d0f0f;background:rgba(220,40,40,.1);
+  padding:.2rem .6rem;border-radius:2px;margin-bottom:1rem;letter-spacing:.1em;
+}
+.card-threat .threat-badge::before{content:'';width:6px;height:6px;background:#ff4444;border-radius:50%;animation:pulse 1s infinite}
+.card-threat .stack-tag{background:rgba(220,40,40,.1);border:1px solid rgba(220,40,40,.3);color:#ff8080;border-radius:2px;font-family:var(--mono);font-size:.67rem;padding:.2rem .55rem;letter-spacing:.04em}
+.card-threat .card-corner{position:absolute;width:14px;height:14px;border-color:#e03030;border-style:solid;opacity:.6}
+.card-threat .card-corner.tl{top:8px;left:8px;border-width:2px 0 0 2px}
+.card-threat .card-corner.br{bottom:8px;right:8px;border-width:0 2px 2px 0}
+.card-flip-wrap:hover .card-threat .card-front{box-shadow:0 0 60px rgba(220,40,40,.2) inset, 0 8px 40px rgba(220,40,40,.15);border-color:#6b1a1a}
+
+/* ══════════════════════════════════════
+   CARD 02 — PURPLE MATRIX KILL STREAM
+   Deep violet, animated hex-code rain strip, ghost glow
+══════════════════════════════════════ */
+.card-matrix .card-front{
+  background:#080612;
+  border:1px solid #2a1a4a;
+  border-left:3px solid #a855f7;
+  box-shadow:0 0 50px rgba(168,85,247,.1) inset, -4px 0 20px rgba(168,85,247,.12);
+}
+.card-matrix .matrix-strip{
+  position:absolute;top:0;right:0;bottom:0;width:44px;
+  overflow:hidden;display:flex;flex-direction:column;align-items:center;
+  padding-top:.5rem;gap:2px;opacity:.35;pointer-events:none;
+}
+.card-matrix .matrix-strip span{
+  font-family:var(--mono);font-size:.55rem;color:#a855f7;
+  animation:matrixDrop linear infinite;
+  white-space:nowrap;
+}
+@keyframes matrixDrop{0%{opacity:0;transform:translateY(-20px)}20%{opacity:1}80%{opacity:.5}100%{opacity:0;transform:translateY(30px)}}
+.card-matrix .project-num{color:#a855f7}
+.card-matrix .project-name{color:#d8b4fe;text-shadow:0 0 24px rgba(168,85,247,.5)}
+.card-matrix .project-desc{color:#9b86c0}
+.card-matrix .proc-row{
+  display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;
+  font-family:var(--mono);font-size:.62rem;color:#7c3aed;letter-spacing:.06em;
+}
+.card-matrix .proc-row .kill{color:#c084fc;padding:.1rem .4rem;border:1px solid #4c1d95;background:rgba(139,92,246,.12);border-radius:2px;animation:killBlink 2.5s infinite}
+@keyframes killBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.card-matrix .stack-tag{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.28);color:#c084fc;border-radius:2px;font-family:var(--mono);font-size:.67rem;padding:.2rem .55rem;letter-spacing:.04em}
+.card-flip-wrap:hover .card-matrix .card-front{box-shadow:0 0 70px rgba(168,85,247,.18) inset, -4px 0 30px rgba(168,85,247,.2);border-left-color:#c084fc}
+
+/* ══════════════════════════════════════
+   CARD 03 — RETRO GREEN SYSTEM MONITOR
+   Phosphor-green terminal, animated CPU/RAM bars, CRT curve shadow
+══════════════════════════════════════ */
+.card-monitor .card-front{
+  background:#020d04;
+  border:1px solid #0d3016;
+  border-bottom:2px solid #22c55e;
+  box-shadow:0 0 40px rgba(34,197,94,.1) inset, 0 6px 30px rgba(34,197,94,.08);
+  font-family:var(--mono);
+}
+.card-monitor .card-front::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(34,197,94,.05),transparent 70%);
+  pointer-events:none;
+}
+.card-monitor .project-num{color:#16a34a;font-family:var(--mono)}
+.card-monitor .project-name{color:#4ade80;text-shadow:0 0 18px rgba(34,197,94,.45);font-family:var(--mono);font-size:1.05rem;letter-spacing:.06em}
+.card-monitor .project-desc{color:#6b9e7a;font-family:var(--mono);font-size:.8rem;line-height:1.9}
+.card-monitor .stat-bars{margin-bottom:1.2rem}
+.card-monitor .bar-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.45rem;font-size:.62rem;color:#16a34a;letter-spacing:.08em}
+.card-monitor .bar-track{flex:1;height:6px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.2);border-radius:1px;overflow:hidden}
+.card-monitor .bar-fill{height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);animation:barPulse 2.5s ease-in-out infinite}
+@keyframes barPulse{0%,100%{opacity:.7}50%{opacity:1}}
+.card-monitor .bar-val{width:28px;text-align:right;color:#4ade80}
+.card-monitor .stack-tag{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#4ade80;border-radius:2px;font-family:var(--mono);font-size:.67rem;padding:.2rem .55rem;letter-spacing:.04em}
+.card-flip-wrap:hover .card-monitor .card-front{box-shadow:0 0 60px rgba(34,197,94,.18) inset, 0 8px 40px rgba(34,197,94,.14);border-bottom-color:#4ade80}
+
+/* ══════════════════════════════════════
+   CARD 04 — ELECTRIC ORANGE FIREWALL
+   Amber/orange, shield geometry SVG, packet-drop flicker, hard diagonal slash
+══════════════════════════════════════ */
+.card-firewall .card-front{
+  background:#0c0700;
+  border:1px solid #3d1f00;
+  border-right:3px solid #f97316;
+  box-shadow:4px 0 20px rgba(249,115,22,.12), 0 0 50px rgba(249,115,22,.07) inset;
+}
+.card-firewall .fw-slash{
+  position:absolute;top:0;right:0;width:0;height:0;
+  border-style:solid;border-width:0 52px 52px 0;
+  border-color:transparent rgba(249,115,22,.18) transparent transparent;
+  pointer-events:none;
+}
+.card-firewall .fw-slash::after{
+  content:'✕';position:absolute;top:4px;right:-44px;
+  font-size:.55rem;color:rgba(249,115,22,.6);font-family:var(--mono);
+}
+.card-firewall .project-num{color:#f97316}
+.card-firewall .project-name{color:#fb923c;text-shadow:0 0 22px rgba(249,115,22,.4)}
+.card-firewall .project-desc{color:#b07a50}
+.card-firewall .fw-rules{margin-bottom:1rem}
+.card-firewall .fw-rule{
+  display:flex;align-items:center;gap:.55rem;margin-bottom:.35rem;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;
+}
+.card-firewall .fw-rule .allow{color:#4ade80;padding:.1rem .35rem;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:2px}
+.card-firewall .fw-rule .deny{color:#f87171;padding:.1rem .35rem;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:2px;animation:denyFlicker 3s infinite}
+.card-firewall .fw-rule span:last-child{color:#7a5535}
+@keyframes denyFlicker{0%,100%{opacity:1}85%{opacity:1}87%{opacity:.2}89%{opacity:1}91%{opacity:.3}93%{opacity:1}}
+.card-firewall .stack-tag{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.28);color:#fb923c;border-radius:2px;font-family:var(--mono);font-size:.67rem;padding:.2rem .55rem;letter-spacing:.04em}
+.card-flip-wrap:hover .card-firewall .card-front{box-shadow:6px 0 30px rgba(249,115,22,.22), 0 0 60px rgba(249,115,22,.12) inset;border-right-color:#fb923c}
+
+/* ═══ CERTIFICATIONS ═══ */
+#certifications{background:var(--s4)}
+#certifications .sec-bg{background-color:var(--s4);background-image:repeating-conic-gradient(from 0deg at 50% 50%, rgba(56,189,248,.02) 0deg, transparent 2.5deg, transparent 30deg);}
+#certifications::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 65% at 50% 50%,rgba(56,189,248,.07) 0%,transparent 68%);z-index:1}
+
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.cert-card{background:rgba(5,10,20,.88);border:1px solid var(--border);padding:2rem;border-radius:2px;display:flex;align-items:flex-start;gap:1.2rem;transition:border-color .25s,background .25s;position:relative;overflow:hidden}
+.cert-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+.cert-card:hover{border-color:rgba(56,189,248,.38);background:rgba(8,16,32,.94)}
+.cert-card:hover::after{transform:scaleX(1)}
+.cert-icon{display:flex;align-items:center;justify-content:center;width:68px;height:68px;min-width:68px;flex-shrink:0;border:1px solid var(--border);border-radius:8px;margin-top:.1rem;overflow:hidden;padding:8px;}
+.cert-name{font-family:var(--display);font-size:1rem;font-weight:700;margin-bottom:.2rem}
+.cert-sub{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.04em;margin-bottom:.35rem;line-height:1.5}
+.cert-status{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;line-height:1.6}
+.cert-status.done{color:var(--accent)}
+.cert-status.learning{color:var(--accent3)}
+
+/* ═══ CONTACT ═══ */
+#contact{background:var(--s5)}
+#contact .sec-bg{background-color:var(--s5);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cellipse cx='100' cy='100' rx='92' ry='62' fill='none' stroke='rgba(56,189,248,0.048)' stroke-width='1'/%3E%3Cellipse cx='100' cy='100' rx='72' ry='46' fill='none' stroke='rgba(56,189,248,0.048)' stroke-width='1'/%3E%3Cellipse cx='100' cy='100' rx='52' ry='32' fill='none' stroke='rgba(56,189,248,0.048)' stroke-width='1'/%3E%3Cellipse cx='100' cy='100' rx='32' ry='20' fill='none' stroke='rgba(56,189,248,0.048)' stroke-width='1'/%3E%3C/svg%3E");background-size:200px 200px;}
+#contact::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 75% at 85% 65%,rgba(129,140,248,.09) 0%,transparent 62%);z-index:1}
+
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-blurb{font-size:1rem;color:#bfcfe8;line-height:1.85;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:.75rem}
+.contact-link{display:flex;align-items:center;gap:1rem;font-family:var(--mono);font-size:.8rem;color:var(--muted);text-decoration:none;padding:.9rem 1.2rem;border:1px solid var(--border);border-radius:2px;transition:all .22s;letter-spacing:.04em;background:rgba(5,10,20,.7)}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,.05)}
+.contact-link-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.contact-form{display:flex;flex-direction:column;gap:1.1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-label{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.form-input,.form-textarea{background:rgba(5,10,22,.85);border:1px solid var(--border);color:var(--text);font-family:var(--body);font-size:.9rem;padding:.75rem 1rem;border-radius:2px;outline:none;transition:border-color .2s;resize:vertical}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-textarea{min-height:120px}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+.footer-links{display:flex;gap:1.5rem;list-style:none}
+.footer-links a{font-family:var(--mono);font-size:.7rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  section{padding:4.5rem 1.5rem}
+  nav{padding:1rem 1.5rem}
+  .contact-layout{grid-template-columns:1fr;gap:2.5rem}
+  footer{flex-direction:column;text-align:center}
+  .exp-timeline{padding-left:1.8rem}
+}
+</style>
+</head>
+<body>
+<a href="#hero" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>~/</span>vipul-pal</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs &amp; Training</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="starCanvas"></canvas>
+  <canvas id="particleCanvas"></canvas>
+  <div class="scanline"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-bracket tl"></div>
+  <div class="hero-bracket tr"></div>
+  <div class="hero-bracket bl"></div>
+  <div class="hero-bracket br"></div>
+  <div class="data-chip" style="right:12%;bottom:30%;animation-duration:8s;animation-delay:0s">SYS_STATUS: ONLINE</div>
+  <div class="data-chip" style="right:6%;bottom:50%;animation-duration:11s;animation-delay:2s">UPTIME: 99.97%</div>
+  <div class="data-chip" style="right:20%;bottom:20%;animation-duration:9s;animation-delay:4s">KERNEL: 5.15.0-RHEL</div>
+  <div class="data-chip" style="right:3%;bottom:65%;animation-duration:13s;animation-delay:1s">AWS::EC2::RUNNING</div>
+  <div class="data-chip" style="right:15%;bottom:75%;animation-duration:10s;animation-delay:3s">FIREWALL: ACTIVE</div>
+  <div class="section-inner hero-inner">
+    <div class="hero-badge">Available for opportunities</div>
+    <h1 class="hero-name" data-text="Vipul Pal.">Vipul<br/><span class="accent">Pal.</span></h1>
+    <p class="hero-title">Linux System Administrator &nbsp;·&nbsp; <span class="hl" id="typewriter"></span><span class="cursor"></span></p>
+    <p class="hero-summary">Linux and DevOps practitioner with hands-on experience in Red Hat Linux, Bash automation, and AWS cloud services. Passionate about system security, infrastructure management, and building tools that keep systems resilient.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">RHCSA</div><div class="stat-label">/ RHCE Trained</div></div>
+      <div><div class="stat-num">CCNA</div><div class="stat-label">Network Certified</div></div>
+      <div><div class="stat-num">~15%</div><div class="stat-label">Downtime Reduced</div></div>
+      <div><div class="stat-num">2h/wk</div><div class="stat-label">Saved via Automation</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d1"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Technical Arsenal</div>
+    <h2 class="section-title">Skills &amp; Expertise</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">🐧</div>
+        <div class="skill-category">Operating Systems</div>
+        <div class="skill-tags"><span class="tag">RHEL</span><span class="tag">Ubuntu</span><span class="tag">Kali Linux</span><span class="tag">Windows</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">☁️</div>
+        <div class="skill-category">Cloud &amp; Virtualization</div>
+        <div class="skill-tags"><span class="tag">AWS EC2</span><span class="tag">IAM</span><span class="tag">S3</span><span class="tag">VPC</span><span class="tag">Security Groups</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-category">Linux Administration</div>
+        <div class="skill-tags"><span class="tag">User Management</span><span class="tag">File Permissions</span><span class="tag">Monitoring</span><span class="tag">Troubleshooting</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-category">Networking</div>
+        <div class="skill-tags"><span class="tag">TCP/IP</span><span class="tag">VLANs</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">Wireshark</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📜</div>
+        <div class="skill-category">Scripting &amp; Automation</div>
+        <div class="skill-tags"><span class="tag">Bash</span><span class="tag">Python</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔐</div>
+        <div class="skill-category">Security</div>
+        <div class="skill-tags"><span class="tag">Linux Hardening</span><span class="tag">Security Auditing</span><span class="tag">Phishing Analysis</span><span class="tag">Malware Detection</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d2"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Work History</div>
+    <h2 class="section-title">Experience</h2>
+    <div class="exp-timeline reveal">
+      <div class="exp-block">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">System Administration Intern</div>
+            <div class="exp-company">TradeSmart Fintech Securities Ltd · Mumbai</div>
+          </div>
+          <div class="exp-period">Aug 2025 – Mar 2026</div>
+        </div>
+        <ul class="exp-points">
+          <li>Monitored system and network performance using Nagios and Wireshark to maintain uptime and visibility.</li>
+          <li>Assisted in troubleshooting network and system issues, reducing downtime by approximately 15%.</li>
+          <li>Automated log cleanup tasks using Bash scripting, reclaiming ~2 hours of manual work per week.</li>
+          <li>Assisted in configuring firewall rules and verifying SSH access policies to strengthen system security.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d3"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Built Things</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid reveal">
+
+      <!-- ── CARD 01: RED THREAT-INTEL TERMINAL ── -->
+      <div class="card-flip-wrap">
+        <div class="project-card card-threat">
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="shine"></div>
+            <div class="card-scanline"></div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner br"></div>
+            <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%">
+              <div class="project-num">PROJECT // 01</div>
+              <div class="threat-badge">⚠ THREAT LEVEL: HIGH</div>
+              <div class="project-name">Linux Hardening &amp; Security Audit Tool</div>
+              <p class="project-desc">An automated security audit tool built in Python to assess system hardening posture. Checks SSH settings, firewall rules, user accounts, running services, and open ports to surface misconfigurations and improve compliance.</p>
+              <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Linux</span><span class="stack-tag">Bash</span><span class="stack-tag">Security Benchmarks</span></div>
+            </div>
+            <div class="flip-hint">hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div>
+              <div class="back-label">// audit_tool.py</div>
+              <div class="back-title">Linux Hardening &amp; Security Audit Tool</div>
+            </div>
+            <div class="back-details">
+              <div class="back-detail-row"><span class="icon">🎯</span><span>Checks 20+ hardening parameters against CIS Benchmark standards</span></div>
+              <div class="back-detail-row"><span class="icon">🔍</span><span>Scans open ports, running services, SSH config, and sudo rules</span></div>
+              <div class="back-detail-row"><span class="icon">📋</span><span>Outputs a severity-graded report of all misconfigurations found</span></div>
+              <div class="back-detail-row"><span class="icon">⚡</span><span>Fully automated — single command execution, no dependencies</span></div>
+            </div>
+            <div class="back-stack">
+              <span class="stack-tag">Python</span><span class="stack-tag">Linux</span><span class="stack-tag">Bash</span><span class="stack-tag">Security Benchmarks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 02: PURPLE MATRIX KILL STREAM ── -->
+      <div class="card-flip-wrap">
+        <div class="project-card card-matrix">
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="shine"></div>
+            <div class="matrix-strip" aria-hidden="true">
+              <span style="animation-duration:1.8s;animation-delay:0s">4b65</span>
+              <span style="animation-duration:2.3s;animation-delay:.3s">792f</span>
+              <span style="animation-duration:1.5s;animation-delay:.6s">ff3a</span>
+              <span style="animation-duration:2.8s;animation-delay:.1s">KILL</span>
+              <span style="animation-duration:1.9s;animation-delay:.9s">9e1c</span>
+              <span style="animation-duration:2.1s;animation-delay:.4s">BLOK</span>
+              <span style="animation-duration:1.6s;animation-delay:1.2s">a7b2</span>
+              <span style="animation-duration:2.5s;animation-delay:.7s">SHA2</span>
+              <span style="animation-duration:1.7s;animation-delay:.2s">c3d4</span>
+              <span style="animation-duration:2.0s;animation-delay:1.0s">PROC</span>
+              <span style="animation-duration:1.4s;animation-delay:1.4s">8f91</span>
+              <span style="animation-duration:2.6s;animation-delay:.5s">HALT</span>
+            </div>
+            <div style="position:relative;z-index:2;padding-right:3rem;display:flex;flex-direction:column;height:100%">
+              <div class="project-num">PROJECT // 02</div>
+              <div class="proc-row">PID 4821 &nbsp;<span class="kill">TERMINATED</span>&nbsp; psutil</div>
+              <div class="project-name">Keylogger Detection &amp; Prevention System</div>
+              <p class="project-desc">A Python-based GUI tool that detects and blocks malicious keyloggers in real time. Identified 10+ malicious processes during testing using process inspection, cryptographic hashing, and multi-threading.</p>
+              <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Tkinter</span><span class="stack-tag">psutil</span><span class="stack-tag">SHA-512</span><span class="stack-tag">Kali Linux</span></div>
+            </div>
+            <div class="flip-hint">hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div>
+              <div class="back-label">// keylogger_detector.py</div>
+              <div class="back-title">Keylogger Detection &amp; Prevention System</div>
+            </div>
+            <div class="back-details">
+              <div class="back-detail-row"><span class="icon">🧬</span><span>SHA-512 hashing to fingerprint and identify malicious process signatures</span></div>
+              <div class="back-detail-row"><span class="icon">⚙️</span><span>Multi-threaded scanning — monitors running processes in real time</span></div>
+              <div class="back-detail-row"><span class="icon">🖥️</span><span>Tkinter GUI with live process kill feed and event log display</span></div>
+              <div class="back-detail-row"><span class="icon">🧪</span><span>Detected 10+ malicious processes during controlled Kali Linux testing</span></div>
+            </div>
+            <div class="back-stack">
+              <span class="stack-tag">Python</span><span class="stack-tag">Tkinter</span><span class="stack-tag">psutil</span><span class="stack-tag">SHA-512</span><span class="stack-tag">Kali Linux</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 03: RETRO GREEN SYSTEM MONITOR ── -->
+      <div class="card-flip-wrap">
+        <div class="project-card card-monitor">
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="shine"></div>
+            <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%">
+              <div class="project-num">PROJECT // 03</div>
+              <div class="stat-bars">
+                <div class="bar-row">CPU<div class="bar-track"><div class="bar-fill" style="width:72%;animation-delay:0s"></div></div><span class="bar-val">72%</span></div>
+                <div class="bar-row">RAM<div class="bar-track"><div class="bar-fill" style="width:58%;animation-delay:.4s"></div></div><span class="bar-val">58%</span></div>
+                <div class="bar-row">DSK<div class="bar-track"><div class="bar-fill" style="width:45%;animation-delay:.8s"></div></div><span class="bar-val">45%</span></div>
+                <div class="bar-row">NET<div class="bar-track"><div class="bar-fill" style="width:83%;animation-delay:1.2s"></div></div><span class="bar-val">83%</span></div>
+              </div>
+              <div class="project-name">Linux Monitoring Dashboard</div>
+              <p class="project-desc">A Bash script that delivers a real-time snapshot of system health — tracking CPU load, RAM consumption, disk usage, top resource-hungry processes, and live network activity.</p>
+              <div class="project-stack"><span class="stack-tag">Bash</span><span class="stack-tag">System Monitoring</span></div>
+            </div>
+            <div class="flip-hint">hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div>
+              <div class="back-label">// monitor.sh</div>
+              <div class="back-title">Linux Monitoring Dashboard</div>
+            </div>
+            <div class="back-details">
+              <div class="back-detail-row"><span class="icon">📊</span><span>Tracks CPU, RAM, disk I/O, and network usage from a single script</span></div>
+              <div class="back-detail-row"><span class="icon">🔝</span><span>Lists top 5 resource-hungry processes with PID and memory usage</span></div>
+              <div class="back-detail-row"><span class="icon">🔁</span><span>Runs in a loop with configurable refresh interval for live ops view</span></div>
+              <div class="back-detail-row"><span class="icon">🛠️</span><span>Built with native Bash tools — no external dependencies required</span></div>
+            </div>
+            <div class="back-stack">
+              <span class="stack-tag">Bash</span><span class="stack-tag">System Monitoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 04: ELECTRIC ORANGE FIREWALL ── -->
+      <div class="card-flip-wrap">
+        <div class="project-card card-firewall">
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="shine"></div>
+            <div class="fw-slash"></div>
+            <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%">
+              <div class="project-num">PROJECT // 04</div>
+              <div class="fw-rules">
+                <div class="fw-rule"><span class="allow">ALLOW</span><span style="color:#f97316">→</span><span style="color:#fb923c">SSH</span><span>port 22</span></div>
+                <div class="fw-rule"><span class="allow">ALLOW</span><span style="color:#f97316">→</span><span style="color:#fb923c">HTTP</span><span>port 80</span></div>
+                <div class="fw-rule"><span class="deny">DROP</span><span style="color:#f97316">⊗</span><span style="color:#f87171">ALL OTHERS</span><span>inbound</span></div>
+              </div>
+              <div class="project-name">Firewall Configuration</div>
+              <p class="project-desc">Configured a host-based firewall policy to lock down attack surface — explicitly allowing only SSH and HTTP traffic while dropping all other inbound connections.</p>
+              <div class="project-stack"><span class="stack-tag">Networking</span><span class="stack-tag">Security Basics</span></div>
+            </div>
+            <div class="flip-hint">hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div>
+              <div class="back-label">// iptables.rules</div>
+              <div class="back-title">Firewall Configuration</div>
+            </div>
+            <div class="back-details">
+              <div class="back-detail-row"><span class="icon">🛡️</span><span>Whitelisted SSH (22) and HTTP (80) — all other inbound traffic dropped</span></div>
+              <div class="back-detail-row"><span class="icon">🔒</span><span>Applied default-deny policy on INPUT chain using iptables rules</span></div>
+              <div class="back-detail-row"><span class="icon">📡</span><span>Stateful rules using conntrack to allow established/related traffic</span></div>
+              <div class="back-detail-row"><span class="icon">📝</span><span>Rules made persistent across reboots via iptables-save configuration</span></div>
+            </div>
+            <div class="back-stack">
+              <span class="stack-tag">iptables</span><span class="stack-tag">Networking</span><span class="stack-tag">Security Basics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d4"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Certification &amp; Training</h2>
+    <div class="certs-grid reveal">
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#1a0000;border-color:#3a0000;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/320px-Red_Hat_logo.svg.png"
+               alt="Red Hat Linux official logo" style="width:48px;height:auto;object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.6rem;">🎖️</span>
+        </div>
+        <div>
+          <div class="cert-name">RHCSA / RHCE</div>
+          <div class="cert-sub">Red Hat Certified System Administrator / Engineer</div>
+          <div class="cert-status done">Training Completed · Aug 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#00285a;border-color:#003d80;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/320px-Cisco_logo_blue_2016.svg.png"
+               alt="Cisco" style="width:48px;height:auto;object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.6rem;">🌐</span>
+        </div>
+        <div>
+          <div class="cert-name">CCNA</div>
+          <div class="cert-sub">Cisco Certified Network Associate</div>
+          <div class="cert-status done">Training Completed · Mar 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#0f1923;border-color:#232f3e;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png"
+               alt="AWS" style="width:48px;height:auto;object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.6rem;">☁️</span>
+        </div>
+        <div>
+          <div class="cert-name">AWS Cloud</div>
+          <div class="cert-sub">Amazon Web Services</div>
+          <div class="cert-status learning">Currently Learning</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d6"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+    <div class="reveal">
+      <div class="edu-card">
+        <div class="edu-year">2025</div>
+        <div>
+          <div class="edu-degree">Bachelor of Science in Computer Science</div>
+          <div class="edu-institution">Thakur Ramnarayan College of Arts and Commerce · Mumbai University</div>
+          <div class="edu-meta">
+            <span class="edu-badge">CGPI 7.92</span>
+            <span class="edu-badge">2022 – 2025</span>
+            <span class="edu-badge">Full-time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider d7"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Let's Connect</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-layout reveal">
+      <div>
+        <p class="contact-blurb">Looking for opportunities in Linux administration, cloud infrastructure, or DevOps. Open to full-time roles, internships, and interesting projects. Let's build something reliable together.</p>
+        <div class="contact-links">
+          <a href="/cdn-cgi/l/email-protection#7b0d120b0e170b1a174a4c4f3b1c161a121755181416" class="contact-link"><span class="contact-link-icon">✉</span><span class="__cf_email__" data-cfemail="3e48574e4b524e5f520f090a7e59535f5752105d5153">[email&#160;protected]</span></a>
+          <a href="tel:+918237474640" class="contact-link"><span class="contact-link-icon">📞</span>+91 82374 74640</a>
+          <a href="https://github.com/thevipul1" target="_blank" rel="noopener noreferrer" class="contact-link"><span class="contact-link-icon">⌥</span>github.com/thevipul1</a>
+          <a href="https://linkedin.com/in/vipul-pal" target="_blank" rel="noopener noreferrer" class="contact-link"><span class="contact-link-icon">in</span>linkedin.com/in/vipul-pal</a>
+          <span class="contact-link" style="cursor:default"><span class="contact-link-icon">📍</span>Mumbai, India</span>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" placeholder="Your name" required/></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="your@email.com" required/></div>
+          <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="What's on your mind?" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Vipul Pal — Built with intention.</div>
+  <ul class="footer-links">
+    <li><a href="https://github.com/thevipul1" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    <li><a href="https://linkedin.com/in/vipul-pal" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#82f4ebf2f7eef2e3eeb3b5b6c2e5efe3ebeeace1edef">Email</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ══ STAR CANVAS ══ */
+(function(){
+  const c=document.getElementById('starCanvas');
+  c.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:0';
+  const ctx=c.getContext('2d');
+  let stars=[];
+  function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight}
+  function init(){
+    stars=[];
+    for(let i=0;i<180;i++){
+      stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.4+.2,o:Math.random()*.65+.1,s:Math.random()*.12+.03,phase:Math.random()*Math.PI*2});
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    const t=Date.now()*.001;
+    stars.forEach(s=>{
+      const o=s.o+Math.sin(t*s.s+s.phase)*.12;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(190,220,255,${Math.max(0,Math.min(1,o))})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();init();draw();
+  let starResizeTimer=null;
+  window.addEventListener('resize',()=>{clearTimeout(starResizeTimer);starResizeTimer=setTimeout(()=>{resize();init();},150);});
+})();
+
+/* ══ PARTICLE NETWORK ══ */
+(function(){
+  const c=document.getElementById('particleCanvas');
+  c.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none';
+  const ctx=c.getContext('2d');
+  const CONNECT=130,COUNT=55;
+  let pts=[],rafId=null,resizeTimer=null;
+  function resize(){
+    c.width=c.offsetWidth;c.height=c.offsetHeight;
+    pts=[];
+    for(let i=0;i<COUNT;i++){
+      pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.38,vy:(Math.random()-.5)*.38,r:Math.random()*2+1});
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>c.width)p.vx*=-1;
+      if(p.y<0||p.y>c.height)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(56,189,248,0.55)';ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<CONNECT){
+          const alpha=(1-dist/CONNECT)*0.22;
+          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(56,189,248,${alpha})`;ctx.lineWidth=1;ctx.stroke();
+        }
+      }
+    }
+    rafId=requestAnimationFrame(draw);
+  }
+  resize();
+  if(rafId)cancelAnimationFrame(rafId);
+  draw();
+  window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{resize();},150);});
+})();
+
+/* ══ TYPEWRITER ══ */
+(function(){
+  const el=document.getElementById('typewriter');
+  if(!el)return;
+  const phrases=['Cloud & DevOps Enthusiast','Linux System Administrator','Security & Automation Pro','AWS Cloud Explorer'];
+  let pi=0,ci=0,deleting=false,wait=0,tid=null;
+  function tick(){
+    const phrase=phrases[pi];
+    if(wait>0){wait--;tid=setTimeout(tick,60);return;}
+    if(!deleting){
+      ci=Math.min(ci+1,phrase.length);
+      el.textContent=phrase.slice(0,ci);
+      if(ci>=phrase.length){deleting=true;wait=30;}
+      tid=setTimeout(tick,90);
+    } else {
+      ci=Math.max(ci-1,0);
+      el.textContent=phrase.slice(0,ci);
+      if(ci<=0){deleting=false;pi=(pi+1)%phrases.length;wait=10;}
+      tid=setTimeout(tick,45);
+    }
+  }
+  tid=setTimeout(tick,1400);
+})();
+
+/* Scroll reveal — force visible immediately as fallback, then animate if observer fires */
+document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+try {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, {threshold:.05});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+} catch(e){}
+
+/* Form */
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button[type="submit"]');
+  if(btn.disabled)return;
+  btn.disabled=true;
+  const orig=btn.textContent;
+  btn.textContent='Sent ✓';
+  btn.style.background='transparent';
+  btn.style.color='var(--accent)';
+  btn.style.borderColor='var(--accent)';
+  setTimeout(()=>{
+    btn.textContent=orig;btn.style.background='';btn.style.color='';btn.style.borderColor='';btn.disabled=false;e.target.reset();
+  },3000);
+}
+
+/* ══ PROJECT CARDS — FLIP + SHINE ══ */
+(function(){
+  // Touch / click toggle flip on mobile
+  document.querySelectorAll('.card-flip-wrap').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      const card = wrap.querySelector('.project-card');
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // Shine follow on front face (desktop only)
+  document.querySelectorAll('.card-flip-wrap').forEach(wrap => {
+    const front = wrap.querySelector('.card-front');
+    const shine = front ? front.querySelector('.shine') : null;
+    if(!shine) return;
+    wrap.addEventListener('mousemove', e => {
+      const r = front.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+      const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+      shine.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,.09) 0%, transparent 55%)`;
+    });
+    wrap.addEventListener('mouseleave', () => {
+      shine.style.background = '';
+    });
+  });
+})();
+function toggleMenu(){
+  const l=document.querySelector('.nav-links');
+  const isOpen=l.style.display==='flex';
+  if(isOpen){l.style.display='none';}
+  else{l.style.cssText='display:flex;flex-direction:column;position:fixed;top:58px;left:0;right:0;background:rgba(4,8,16,.97);padding:1.5rem 2rem;gap:1.2rem;border-bottom:1px solid #152040;z-index:199';}
+}
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>{const l=document.querySelector('.nav-links');if(window.innerWidth<=768)l.style.display='none';});
+});
+document.addEventListener('click',function(e){
+  const nav=document.querySelector('nav');
+  const l=document.querySelector('.nav-links');
+  if(l.style.display==='flex'&&!nav.contains(e.target)){l.style.display='none';}
+});
+</script>
+</body>
+</html>
